@@ -131,15 +131,15 @@
                 var self = this;
                 return <div className="clearfix wrapper col-xs-12 col-sm-8 col-sm-offset-2">
                     <div className="row action-content group">
-                        <div className="action-bar col-xs-10">
-                             {
-                                 self.state.availableActions
-                             }
-                        </div>
                         <div className="controls col-xs-2 text-left">
                             <div className="btn waves-effect waves-light add-action" onClick={self.addAction}><i className="material-icons">note_add</i></div>
                             <div className="btn waves-effect waves-light add-action" onClick={self.refresh}><i className="material-icons">replay</i></div>
                             <div className="btn waves-effect waves-light add-action" onClick={self.removeAction}><i className="material-icons">delete</i></div>
+                        </div>
+                        <div className="action-bar col-xs-10">
+                             {
+                                 self.state.availableActions
+                             }
                         </div>
                     </div>
                 </div>;
