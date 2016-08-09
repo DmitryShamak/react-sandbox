@@ -10,6 +10,12 @@ module.exports = {
     },
     module: {
         loaders: [{
+            test: /\.js$/,
+            loader: 'babel-loader',
+            query: {
+                presets: ['es2015', 'react']
+            }
+        }, {
             test: /\.scss$/i,
             loader: extractCSS.extract(['css','sass', "autoprefixer"])
         },{
@@ -17,6 +23,9 @@ module.exports = {
             loader: "html-loader"
         }]
     },
+    "blacklist": [
+        "useStrict"
+    ],
     plugins: [
         extractCSS
     ]
