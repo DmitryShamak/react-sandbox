@@ -1,11 +1,12 @@
+var styles = require("./style/main.scss");
+
 var app = {
     init: function() {
-        ReactDOM.render(
-            <h2>Hello</h2>,
-            document.getElementById("content")
-        );
+        app.map.generate();
+        app.user.create();
     },
-    map: require("./js/map.js")
+    map: require("./js/map.js"),
+    user: require("./js/user.js")
 };
 
 $(document).ready(app.init);
