@@ -1,10 +1,8 @@
-function MapCell() {
+function MapCell(props) {
     return React.createClass({
         render: function() {
             return (
-                <div className="map-cell text-center col-xs-4">
-                    <h2>Cell</h2>
-                </div>
+                <div className={'map-cell text-center pull-left ' + props.type} onClick={$state.go.bind(this, "location", [props.name])}></div>
             );
         }
     })

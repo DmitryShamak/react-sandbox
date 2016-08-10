@@ -1,6 +1,6 @@
-function User() {
+function Location() {
     var container = document.createElement("div");
-        container.id = "user-canvas";
+        container.id = "location-canvas";
 
     var self = this;
     var isMounted = false;
@@ -8,12 +8,16 @@ function User() {
     var Component = React.createClass({
         render: function() {
             return (
-                <div className="user"><h2>USER</h2></div>
+                <div className="location">
+                    <div className="navigation text-center">
+                        <span className="btn" onClick={$state && $state.go.bind(self, "map")}>Map</span>
+                    </div>
+                </div>
             );
         }
     });
 
-    var init = function() {
+    self.render = function() {
         ReactDOM.render(
           <Component />,
           container
@@ -32,11 +36,6 @@ function User() {
         ReactDOM.unmountComponentAtNode(container);
         document.body.removeChild(container);
     };
-
-    self.create = function() {
-        init();
-        console.log("user created");
-    }
 }
 
-module.exports = new User();
+module.exports = new Location();

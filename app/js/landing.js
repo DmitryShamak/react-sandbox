@@ -40,7 +40,7 @@ function Landing() {
     var Component = React.createClass({
         render: function() {
             return (
-                <div className="account text-center margin-top-sm">
+                <div className="account no-selection text-center margin-top-sm">
                     <h2>Landing</h2>
 
                     <div className="fixed-xs-width">

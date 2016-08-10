@@ -3,7 +3,7 @@ var styles = require("./style/main.scss");
 window.$state = {
     go: function(state, params) {
         if($state.current() != state) {
-            return window.location.href = "/" + state;
+            return window.location.href = "/" + state + (params && params.length ? "/" + params.toString().replace(/\,/g, "/") : "");
         }
 
         switch(state) {
@@ -15,13 +15,13 @@ window.$state = {
             case "map":
                 app.clear();
 
-                app.map.generate();
+                app.map.render();
                 app.user.create();
                 break;
             case "location":
                 app.clear();
 
-                app.map.location.open();
+                app.map.location.render();
                 app.user.create();
                 break;
             default:

@@ -1,5 +1,29 @@
 var MapCell = require("./mapCell.js");
 
+var faker = {
+    getRandomType: function() {
+        var rand = Math.floor(Math.random() * 4);
+        var type = "";
+
+        switch(rand) {
+            case 0:
+                type = "stone";
+                break;
+            case 1:
+                type = "ice";
+                break;
+            case 2:
+                type = "lava";
+                break;
+            default:
+                type = "grass";
+                break;
+        }
+
+        return type;
+    }
+};
+
 function Map() {
     var container = document.createElement("div");
     container.id = "map-canvas";
@@ -17,18 +41,22 @@ function Map() {
                     <div className="navigation text-center">
                         <span className="btn" onClick={$state && $state.go.bind(self, "landing")}>Landing</span>
                     </div>
-                    {
+                    <div class="clearfix">{
                         map.map(function(props) {
                             var MapCellComponent = new MapCell(props);
                             return < MapCellComponent />
                         })
-                    }
+                    }</div>
                 </div>
             );
         }
     });
 
-    var init = function() {
+    self.render = function() {
+        if(!map || !map.length) {
+            return self.generate();
+        }
+
         ReactDOM.render(
             <Component className="row" />,
             container
@@ -38,15 +66,14 @@ function Map() {
         document.body.appendChild(container);
     };
 
-    self.addCell = function() {
-        map.push({
-            //todo: props
+    self.addCell = function(props) {
+        var land = $.extend(props, {
+            type: faker.getRandomType()
         });
+        map.push(land);
     };
 
-    self.location = {
-        open: function() {}
-    };
+    self.location = require("./location.js");
 
     self.remove = function() {
         if(!isMounted) {
@@ -59,14 +86,20 @@ function Map() {
     };
 
     self.generate = function() {
-        map = [];
+        map = JSON.parse(localStorage.getItem("map"));
 
-        for(var i=0; i<27; i++) {
-            self.addCell();
+        if(map) {
+            return self.render();
         }
 
-        init();
-        console.log("map generated");
+        map = [];
+        for(var i=0; i<25; i++) {
+            self.addCell({name: "land-"+i});
+        }
+
+        localStorage.setItem("map", JSON.stringify(map));
+
+        return self.render();
     };
 
 }
