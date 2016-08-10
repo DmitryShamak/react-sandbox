@@ -2,7 +2,9 @@ function MapCell() {
     return React.createClass({
         render: function() {
             return (
-                <h2>C</h2>
+                <div className="map-cell text-center col-xs-4">
+                    <h2>Cell</h2>
+                </div>
             );
         }
     })

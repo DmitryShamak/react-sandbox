@@ -2,30 +2,39 @@ var MapCell = require("./mapCell.js");
 
 function Map() {
     var container = document.createElement("div");
-        container.id = "map";
+    container.id = "map-canvas";
 
-    var self = this;
+    container.className = "no-selection";
+
+    var self = this,
+        isMounted;
     var map = [];
 
     var Component = React.createClass({
         render: function() {
             return (
-                <div>{
-                    map.map(function(props) {
-                        var MapCellComponent = new MapCell(props);
-                        return < MapCellComponent />
-                    })
-                }</div>
+                <div>
+                    <div className="navigation text-center">
+                        <span className="btn" onClick={$state && $state.go.bind(self, "landing")}>Landing</span>
+                    </div>
+                    {
+                        map.map(function(props) {
+                            var MapCellComponent = new MapCell(props);
+                            return < MapCellComponent />
+                        })
+                    }
+                </div>
             );
         }
     });
 
     var init = function() {
         ReactDOM.render(
-            <Component />,
+            <Component className="row" />,
             container
         );
 
+        isMounted = true;
         document.body.appendChild(container);
     };
 
@@ -35,8 +44,26 @@ function Map() {
         });
     };
 
+    self.location = {
+        open: function() {}
+    };
+
+    self.remove = function() {
+        if(!isMounted) {
+            return;
+        }
+
+        isMounted = false;
+        ReactDOM.unmountComponentAtNode(container);
+        document.body.removeChild(container);
+    };
+
     self.generate = function() {
-        self.addCell();
+        map = [];
+
+        for(var i=0; i<27; i++) {
+            self.addCell();
+        }
 
         init();
         console.log("map generated");

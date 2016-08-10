@@ -23,8 +23,9 @@ body {
 $canvasWidth: 800px;
 $canvasHeight: 600px;
 
-#user,
-#map {
+#user-canvas,
+#landing-canvas,
+#map-canvas {
   position: absolute;
   top: 50%; left: 50%;
 
@@ -33,5 +34,51 @@ $canvasHeight: 600px;
   margin-top: -$canvasHeight/2;
   margin-left: -$canvasWidth/2;
 
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  .navigation {
+    height: 35px;
+    margin-top: -35px;
+  }
 }
+
+#map-canvas {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+
+  .map-cell {
+    cursor: pointer;
+
+    &:hover {
+      outline: 1px solid #eee;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    &:active {
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+  }
+}
+
+#user-canvas {
+  pointer-events: none;
+  color: #FFF;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 0; right: 0;
+
+    background: rgb(24, 24, 24);
+    opacity: 0.6;
+  }
+
+   .user {
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     width: 70px;
+     height: 70px;
+     margin: -35px;
+     line-height: 70px;
+     text-align: center;
+   }
+ }
