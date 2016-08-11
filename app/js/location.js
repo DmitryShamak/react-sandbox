@@ -17,7 +17,7 @@ function Location() {
         }
     });
 
-    self.render = function() {
+    self.generate = function() {
         ReactDOM.render(
           <Component />,
           container
@@ -38,4 +38,15 @@ function Location() {
     };
 }
 
-module.exports = new Location();
+module.exports = React.createClass({
+    render: function() {
+        return (
+            <div className="module">
+                <div className="navigation text-center">
+                    <span className="btn" onClick={this.props.parent.router.go.bind(self, "map")}>Map</span>
+                </div>
+                <div className="module-location"></div>
+            </div>
+        );
+    }
+});

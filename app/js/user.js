@@ -39,4 +39,12 @@ function User() {
     }
 }
 
-module.exports = new User();
+module.exports = React.createClass({
+    render: function() {
+        return (
+            <div className="module disabled">
+                <div className="module-user"><h2>USER</h2></div>
+            </div>
+        );
+    }
+});

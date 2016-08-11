@@ -1,55 +1,44 @@
 var styles = require("./style/main.scss");
 
-window.$state = {
-    go: function(state, params) {
-        if($state.current() != state) {
-            return window.location.href = "/" + state + (params && params.length ? "/" + params.toString().replace(/\,/g, "/") : "");
-        }
-
-        switch(state) {
-            case "landing":
-                app.clear();
-
-                app.landing.render();
-                break;
-            case "map":
-                app.clear();
-
-                app.map.render();
-                app.user.create();
-                break;
-            case "location":
-                app.clear();
-
-                app.map.location.render();
-                app.user.create();
-                break;
-            default:
-                $state.go("landing");
-                break;
+var App = React.createClass({
+    getInitialState: function() {
+        return {
+            clear: function() {
+                //app.landing.remove();
+                //app.map.remove();
+                //app.user.remove();
+            },
+            faker: require("./js/faker.js"),
+            router: require("./js/router.js"),
+            landing: require("./js/landing.js"),
+            map: require("./js/map.js"),
+            location: require("./js/location.js"),
+            user: require("./js/user.js")
         }
     },
-    getUrlParams: function() {
-        return window.location.pathname.split("/").filter(function(state) { return !!state; });
-    },
-    current: function() {
-        return $state.getUrlParams()[0];
+    render: function() {
+        var state = this.state.router.current();
+        if(!state) {
+            return this.state.router.go();
+        }
+
+        var ActiveClass = this.state[state];
+        var User = this.state.user;
+        var userRequired = this.state.router.userRequired(state);
+
+        return (<div id="app-canvas">
+            < ActiveClass parent={this.state} />
+            { userRequired && < User /> }
+        </div>);
     }
-};
 
-var app = {
-    clear: function() {
-        app.landing.remove();
-        app.map.remove();
-        app.user.remove();
-    },
-    init: function() {
-        var currentState = $state.current();
-        $state.go(currentState);
-    },
-    landing: require("./js/landing.js"),
-    map: require("./js/map.js"),
-    user: require("./js/user.js")
-};
+});
 
-$(document).ready(app.init);
+$(document).ready(function() {
+    var content = document.getElementById("content");
+
+    ReactDOM.render(
+        <App id={"app-canvas"} />,
+        content
+    );
+});

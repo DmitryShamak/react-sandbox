@@ -83,4 +83,57 @@ function Landing() {
     }
 }
 
-module.exports = new Landing();
+module.exports = React.createClass({
+    getInitialState: function() {
+      return {
+        form: {},
+        onchange: function(key, event) {
+            var target = event.target;
+            var value = target.value.trim();
+            var valid = value != "";
+            var form = this.state.form;
+
+            $(target).removeClass("invalid");
+
+            form[key] = {
+                valid: valid,
+                value: value,
+                target: target
+            };
+
+            if(!valid) {
+                $(target).addClass("invalid");
+            }
+
+            target.value = value;
+            return value;
+        },
+        signin: function() {
+            var form = this.state.form;
+            if(!form.email || !form.email.valid || !form.password || !form.password.valid) {
+                return;
+            }
+
+            form = {};
+            this.props.parent.router.go("map");
+        }
+      }
+    },
+    render: function() {
+        return (
+            <div className="account no-selection text-center margin-top-sm">
+                <h2>Landing</h2>
+
+                <div className="fixed-xs-width">
+                    <div className="form-group">
+                        <input className="form-control" type="text" onChange={this.state.onchange.bind(this, "email")} placeholder="email" />
+                    </div>
+                    <div className="form-group">
+                        <input className="form-control" type="password" onChange={this.state.onchange.bind(this, "password")} placeholder="password" />
+                    </div>
+                    <div className="btn form-control" onClick={this.state.signin.bind(this)}>Sign In</div>
+                </div>
+            </div>
+        );
+    }
+});

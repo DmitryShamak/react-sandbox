@@ -1,29 +1,5 @@
 var MapCell = require("./mapCell.js");
 
-var faker = {
-    getRandomType: function() {
-        var rand = Math.floor(Math.random() * 4);
-        var type = "";
-
-        switch(rand) {
-            case 0:
-                type = "stone";
-                break;
-            case 1:
-                type = "ice";
-                break;
-            case 2:
-                type = "lava";
-                break;
-            default:
-                type = "grass";
-                break;
-        }
-
-        return type;
-    }
-};
-
 function Map() {
     var container = document.createElement("div");
     container.id = "map-canvas";
@@ -68,12 +44,10 @@ function Map() {
 
     self.addCell = function(props) {
         var land = $.extend(props, {
-            type: faker.getRandomType()
+            type: $faker.getRandomType()
         });
         map.push(land);
     };
-
-    self.location = require("./location.js");
 
     self.remove = function() {
         if(!isMounted) {
@@ -104,4 +78,26 @@ function Map() {
 
 }
 
-module.exports = new Map();
+module.exports = React.createClass({
+    getInitialState: function() {
+        return {
+            map: JSON.parse(localStorage.getItem("map")) || []
+        }
+    },
+    render: function() {
+        var parent = this.props.parent;
+        return (
+            <div className="module">
+                <div className="navigation text-center">
+                    <span className="btn" onClick={this.props.parent.router.go.bind(self, "landing")}>Landing</span>
+                </div>
+                <div id="map" className="module-map clearfix">{
+                    this.state.map.map(function(props) {
+                        var MapCellComponent = new MapCell(props, parent);
+                        return < MapCellComponent />
+                    })
+                }</div>
+            </div>
+        );
+    }
+});
