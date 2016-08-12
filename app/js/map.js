@@ -79,8 +79,15 @@ function Map() {
 }
 
 module.exports = React.createClass({
+    onLocationSelected: function() {
+        this.props.parent.router.go("location", ["default", "location"], this.props.parent);
+    },
     getInitialState: function() {
+        var self = this;
+        setTimeout(function() {  self.setState({'busy':  false}); }, self.props.parent.faker.getDelay());
+
         return {
+            busy: true,
             map: JSON.parse(localStorage.getItem("map")) || []
         }
     },
@@ -93,12 +100,9 @@ module.exports = React.createClass({
                 <div className="navigation text-center">
                     <span className="form-control fixed-xs-width btn" onClick={parent.router.go.bind(self, "landing")}>Landing</span>
                 </div>
-                <div id="map" className="module-map clearfix">{
-                    this.state.map.map(function(props) {
-                        var MapCellComponent = new MapCell(props, parent);
-                        return < MapCellComponent />
-                    })
-                }</div>
+                <div className={this.state.busy ? " busy" : ""}>
+                    <canvas width="800" height="600" id="map" className="module-map clearfix" onClick={self.onLocationSelected}></canvas>
+                </div>
             </div>
         );
     }

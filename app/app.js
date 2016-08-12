@@ -34,15 +34,8 @@ var App = React.createClass({
             return APP_TEMP;
         }
 
-        var userRequired = this.state.router.userRequired(state);
-
-        if(userRequired) {
-            var User = this.state.user;
-        }
-
         APP_TEMP = (<div id="app-canvas">
             < ActiveClass parent={this.state} />
-            { userRequired && < User /> }
         </div>);
 
         return APP_TEMP;

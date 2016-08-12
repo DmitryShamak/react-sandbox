@@ -50,13 +50,14 @@ module.exports = React.createClass({
     },
     render: function() {
         var self = this;
-        var TEMP = this.state.busy ? <div className="module-location busy"></div> : <div className="module-location stone"></div>;
         return (
             <div className="module">
                 <div className="navigation text-center">
                     <div className="form-control fixed-xs-width btn" onClick={this.props.parent.router.go.bind(self, "map")}>Map</div>
                 </div>
-                { TEMP }
+                <div className={this.state.busy ? " busy" : ""}>
+                    <canvas width="800" height="600" id="location" className="module-location stone"></canvas>
+                </div>
             </div>
         );
     }
