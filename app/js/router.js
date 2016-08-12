@@ -1,31 +1,35 @@
 var router = {
-    go: function(state, params) {
+    auth: function() {
+        var user = localStorage.getItem("user");
+        var current = router.current();
+
+        if(current === "landing") {
+            return true;
+        }
+
+        if(!user && current !== "landing") {
+            return false;
+        }
+
+        return true;
+    },
+    go: function(state, params, root) {
+        if(!state) {
+            state = "landing";
+        }
+
         if(router.current() != state) {
-            return window.location.href = "/" + state + (params && params.length ? "/" + params.toString().replace(/\,/g, "/") : "");
+            var url = "/" + state + (params && params.length ? "/" + params.toString().replace(/\,/g, "/") : "");
+            history.pushState({}, null, url);
         }
 
-        switch(state) {
-            case "landing":
-                //app.clear();
+        //if(!router.auth.call(this)) {
+        //    return;
+        //}
 
-                //app.landing.render();
-                break;
-            case "map":
-                //app.clear();
+        var parent = root || (this.state.parent ? this.state.parent : this.props.parent);
 
-                //app.map.render();
-                //app.user.create();
-                break;
-            case "location":
-                //app.clear();
-
-                //app.location.generate();
-                //app.user.create();
-                break;
-            default:
-                router.go("landing");
-                break;
-        }
+        return parent.clear();
     },
     getUrlParams: function() {
         return window.location.pathname.split("/").filter(function(state) { return !!state; });

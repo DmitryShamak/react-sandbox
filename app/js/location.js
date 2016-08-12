@@ -39,13 +39,24 @@ function Location() {
 }
 
 module.exports = React.createClass({
+    getInitialState: function() {
+        var self = this;
+
+        setTimeout(function() {  self.setState({'busy':  false}); }, self.props.parent.faker.getDelay());
+
+        return {
+            busy: true
+        };
+    },
     render: function() {
+        var self = this;
+        var TEMP = this.state.busy ? <div className="module-location busy"></div> : <div className="module-location stone"></div>;
         return (
             <div className="module">
                 <div className="navigation text-center">
-                    <span className="btn" onClick={this.props.parent.router.go.bind(self, "map")}>Map</span>
+                    <div className="form-control fixed-xs-width btn" onClick={this.props.parent.router.go.bind(self, "map")}>Map</div>
                 </div>
-                <div className="module-location"></div>
+                { TEMP }
             </div>
         );
     }

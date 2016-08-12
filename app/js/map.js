@@ -85,11 +85,13 @@ module.exports = React.createClass({
         }
     },
     render: function() {
+        var self = this;
         var parent = this.props.parent;
+
         return (
             <div className="module">
                 <div className="navigation text-center">
-                    <span className="btn" onClick={this.props.parent.router.go.bind(self, "landing")}>Landing</span>
+                    <span className="form-control fixed-xs-width btn" onClick={parent.router.go.bind(self, "landing")}>Landing</span>
                 </div>
                 <div id="map" className="module-map clearfix">{
                     this.state.map.map(function(props) {

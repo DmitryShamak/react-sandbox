@@ -1,4 +1,9 @@
 module.exports = {
+    getDelay: function() {
+        var rand = Math.floor(Math.random() * 4000);
+
+        return rand;
+    },
     getRandomType: function() {
         var rand = Math.floor(Math.random() * 4);
         var type = "";

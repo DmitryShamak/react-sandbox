@@ -7,9 +7,10 @@ function MapCell(props, parent) {
           }
         },
         render: function() {
+            var self = this;
             return (
                 <div className={'map-cell text-center pull-left ' + this.state.data.type}
-                     onClick={this.state.parent.router.go.bind(this, "location", [this.state.data.name])}></div>
+                     onClick={self.state.parent.router.go.bind(self, "location", [this.state.data.name], null)}></div>
             );
         }
     })

@@ -2,6 +2,7 @@
 
 html {
   height: 100%;
+  background-color: #111;
 }
 
 body {
@@ -16,6 +17,9 @@ body {
   font-size: 12px;
 
   line-height: 1.8;
+  background-color: #000 !important;
+  background-image: url("https://s-media-cache-ak0.pinimg.com/564x/8c/b7/3e/8cb73efe4b0c2f64db0d1df303d54c57.jpg");
+  background-position: center center;
 
   @import "base.scss";
 }
@@ -32,7 +36,7 @@ $canvasHeight: 600px;
   margin-top: -$canvasHeight/2;
   margin-left: -$canvasWidth/2;
 
-  box-shadow: 0 0 1px 1px #111;
+  background-color: rgba(238, 238, 238, 0.95);
 
   .navigation {
     height: 35px;
@@ -43,6 +47,24 @@ $canvasHeight: 600px;
     position: absolute;
     top:0; bottom: 0;
     left: 0; right: 0;
+
+    .busy:after {
+      content: "";
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 0; right: 0;
+
+      pointer-events: none;
+
+      background-color: #000;
+      background-image: url("https://s-media-cache-ak0.pinimg.com/originals/4d/ee/6b/4dee6b73ce23be99b3cb9d24969eb42f.gif");
+      background-repeat: no-repeat;
+      background-position: center;
+
+      opacity: 0.9;
+
+      z-index: 2;
+    }
   }
 }
 
@@ -65,6 +87,14 @@ $ice: #6fefff;
 }
 .lava {
   background-color: $lava;
+}
+
+.module-account {
+  margin-top: 150px;
+
+  .form-control {
+    background: rgba(0, 0, 0, 0.05);
+  }
 }
 
 .module-map {

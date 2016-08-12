@@ -114,14 +114,20 @@ module.exports = React.createClass({
                 return;
             }
 
+            localStorage.setItem("user", JSON.stringify({
+                email: form.email.value
+            }));
+
             form = {};
-            this.props.parent.router.go("map");
+            this.props.parent.router.go.call(this, "map");
         }
       }
     },
     render: function() {
+        localStorage.removeItem("user");
+
         return (
-            <div className="account no-selection text-center margin-top-sm">
+            <div className="account no-selection text-center module-account">
                 <h2>Landing</h2>
 
                 <div className="fixed-xs-width">

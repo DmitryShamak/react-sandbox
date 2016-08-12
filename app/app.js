@@ -2,11 +2,14 @@ var styles = require("./style/main.scss");
 
 var App = React.createClass({
     getInitialState: function() {
+        var self = this;
         return {
             clear: function() {
                 //app.landing.remove();
                 //app.map.remove();
                 //app.user.remove();
+
+                self.setState({ activeState:  self.state.router.current() || "landing" });
             },
             faker: require("./js/faker.js"),
             router: require("./js/router.js"),
@@ -17,19 +20,32 @@ var App = React.createClass({
         }
     },
     render: function() {
+        var APP_TEMP = (<div id="app-canvas"></div>);
         var state = this.state.router.current();
-        if(!state) {
-            return this.state.router.go();
+        var ActiveClass = this.state[state];
+
+        if(!ActiveClass) {
+            this.state.router.go("landing", null, this.state);
         }
 
-        var ActiveClass = this.state[state];
-        var User = this.state.user;
+        if(!state || !this.state.router.auth()) {
+            this.state.router.go(null, null, this.state);
+
+            return APP_TEMP;
+        }
+
         var userRequired = this.state.router.userRequired(state);
 
-        return (<div id="app-canvas">
+        if(userRequired) {
+            var User = this.state.user;
+        }
+
+        APP_TEMP = (<div id="app-canvas">
             < ActiveClass parent={this.state} />
             { userRequired && < User /> }
         </div>);
+
+        return APP_TEMP;
     }
 
 });
